@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 import { Label, Container } from './styles';
 
-export default function Card() {
+export default function Card({data}) {
+  const ref = useRef();
+
+  const [{isDragging}, dragRef] = useDrag({
+    item:{type: 'CARD', id: data.id},
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    })
+  });
+
+  const [, dropRef] = useDrop({
+    accept: 'CARD',
+    hover(item, monitor) {
+        console.log(item.id)
+        console.log(data.id);
+    }
+  });
+
+  dragRef(dropRef(ref));
   return (
-    <Container>
+    <Container ref={ref} isDragging={isDragging}>
       <header>
-        <Label color="#7159c1"></Label>
-        <p>Atualizar completa de todos os servidores linux</p>
-        <img src="https://lh3.googleusercontent.com/-yt6hbeidwVs/AAAAAAAAAAI/AAAAAAAAAAA/AKF05nCk2V6AwmyOQbImvEX8wDc1U0K0DQ/photo.jpg?sz=46" alt="Sandro Campos"></img>
-      </header>
+        {data.labels.map( label => <Label key={label} color={label}/>)}
+        </header>
+        <p>{data.content}</p>
+        {data.user && <img src={data.user} alt=""/>}
     </Container>
   );
 }

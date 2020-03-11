@@ -7,6 +7,7 @@ flex-grow:0;
 flex-shrink:0;
 flex-basis:320px;
 list-style-type: none;
+opacity: ${props=> props.done ? 0.6 : 1 };
 
 &+div{
   border-left: 1px solid rgb(0,0,0,0.05);
