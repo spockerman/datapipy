@@ -6,6 +6,7 @@ height: 100%;
 flex-grow:0;
 flex-shrink:0;
 flex-basis:320px;
+list-style-type: none;
 
 &+div{
   border-left: 1px solid rgb(0,0,0,0.05);
